@@ -1,0 +1,139 @@
+
+import fetch from 'node-fetch';
+import express from 'express';
+import dotenv from 'dotenv';
+import { XMLParser } from 'fast-xml-parser';
+import cors from 'cors';
+import https from 'https';
+
+dotenv.config();
+
+const parser = new XMLParser();
+const app = express();
+app.use(cors());
+
+const port = 5500;
+
+//Endpoint to fetch status.xml
+app.get('/fetch-status', async (req, res) => {
+  try {
+    console.log('Received request for /fetch-status'); // Log for debugging
+    const response = await fetch('https://192.168.10.167/status.xml', {
+      headers: {
+        'Authorization': 'Basic ' + Buffer.from('Test123:admin@123').toString('base64'),
+      },
+      agent: new https.Agent({
+        rejectUnauthorized: false, // Disable SSL verification
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const xmlText = await response.text();
+    const jsonObj = parser.parse(xmlText);
+
+    console.log('Parsed XML:', jsonObj);
+    
+    //Audio Devices Report
+    const handsetUSBReport = jsonObj?.Status?.Audio?.Devices?.HandsetUSB?.ConnectionStatus;
+    const headsetUSBReport = jsonObj?.Status?.Audio?.Devices?.HeadsetUSB?.ConnectionStatus;
+    const microphoneReport = jsonObj?.Status?.Audio?.Input?.Connectors?.Microphone?.ConnectionStatus;
+    const noiseRemoval = jsonObj?.Status?.Audio?.Microphones?.NoiseRemoval;
+    const voiceActivityDetector = jsonObj?.Status?.Audio?.Microphones?.VoiceActivityDetector?.Activity;
+
+    // Cameras Report
+    const cameraReport = jsonObj?.Status?.Cameras;
+    const cameraConnectionStatus = cameraReport.Camera.Connected;
+    const cameraFrameRate = cameraReport.Camera.FrameRate;
+    const cameraLightningConditions = cameraReport.Camera.LightingConditions;
+    const speakerTracking = cameraReport.SpeakerTrack.Availability;
+    const speakerTrackingStatus = cameraReport.SpeakerTrack.Status;
+
+    // Peripherals Report
+    const peripheralsReport = jsonObj?.Status?.Peripherals?.ConnectedDevice;
+    const deviceName = peripheralsReport.Name;
+    const deviceStatus = peripheralsReport.Status;
+    const deviceType = peripheralsReport;
+
+    // Proximity Report
+    const proximityReport = jsonObj?.Status?.Proximity?.Services?.Availability;
+
+    // Room Analytics Report
+    const roomAnalyticsReport = jsonObj?.Status?.RoomAnalytics;
+    const peopleCount = roomAnalyticsReport.PeopleCount;
+    const peopleCapacity = peopleCount.Capacity;
+    const peopleCurrent = peopleCount.Current;
+    const ambientNoiseLevel = roomAnalyticsReport.AmbientNoise.Level.A;
+    const soundLevel = roomAnalyticsReport.Sound.Level.A;
+
+    // Video Report
+    const videoReport = jsonObj?.Status?.Video;
+    const videoReportInput = jsonObj?.Status?.Video.Input;
+
+    const airplayStatus = videoReportInput.AirPlay.Status;
+    const mainVideoSource = videoReportInput.MainVideoSource;
+    const monitors = videoReportInput.Monitors;
+    const miracastStatus = videoReportInput.Miracast.Status;
+
+    const videoReportOutput = videoReport.Output;
+    const connectorConnectionStatus = videoReportOutput.Connector.Connected;
+
+    const connectorResolution = videoReportOutput.Connector.Resolution;
+    const connectorResolutionHeight = connectorResolution.Height;
+    const connectorResolutionWidth = connectorResolution.Width;
+    const connectorResolutionRefreshRate = connectorResolution.RefreshRate;
+    const monitorName = videoReportOutput.ModelName;
+    const webcamMode = videoReportOutput.Webcam.Mode;
+    const webcamStatus = videoReportOutput.Webcam.Status;
+
+    // // Check Call Quality
+    // let callReport = ''; // Set callReport to empty by default
+
+    // if (microphoneReport === 'unknown') {
+    //   callReport += 'microphone has issues';
+    // }
+    // if (noiseRemoval === 'off' || voiceActivityDetector === 'False') {
+    //   callReport += 'noise removal or voice activity detector did not work';
+    // }
+    // if (cameraLightningConditions !== 'good') {
+    //   callReport += 'camera lighting conditions are not good';
+    // }
+    // if (speakerTrackingStatus !== 'available') {
+    //   callReport += 'speaker tracking is not available';
+    // }
+    // if (peopleCurrent > peopleCapacity) {
+    //   callReport += 'room is overcrowded';
+    // }
+    // if (ambientNoiseLevel > 40 && ambientNoiseLevel < 50) {
+    //   callReport += 'ambient noise level is not good';
+    // }
+    // if (ambientNoiseLevel > 50) {
+    //   callReport += 'ambient noise level is very high';
+    // }
+    // if (proximityReport !== 'available') {
+    //   callReport += 'proximity services are not available';
+    // }
+    // if (connectorConnectionStatus !== 'True') {
+    //   callReport += 'connector is not connected';
+    // }
+    
+    // let finalStatus = '';
+    // if (callReport === '') {
+    //   finalStatus = "ok ✔️"; // No issues, so status is okay
+    // } else {
+    //   finalStatus = "not ok ❌"; // Issues exist, so status is not okay
+    // }
+    res.json({ handsetUSBReport, headsetUSBReport, microphoneReport, noiseRemoval, voiceActivityDetector, cameraConnectionStatus, cameraFrameRate, cameraLightningConditions, speakerTracking, speakerTrackingStatus, deviceName, deviceStatus, deviceType, proximityReport, ambientNoiseLevel, soundLevel, peopleCapacity, peopleCurrent, mainVideoSource, airplayStatus, monitors, miracastStatus, connectorConnectionStatus, connectorResolutionHeight, connectorResolutionWidth, connectorResolutionRefreshRate, monitorName, webcamMode, webcamStatus});
+  }catch (error) {
+    console.error('Error fetching status.xml', error);
+    res.status(500).send('Error fetching status.xml');
+  }
+});
+
+app.use(express.static('public'));
+
+app.listen(port, () => {
+  console.log(`Server running now at ${port}`);
+});

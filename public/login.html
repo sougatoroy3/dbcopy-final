@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="auth-container">
+        <h2>Login</h2>
+        <form id="loginForm">
+          <label for="email">Email:</label>
+          <input type="email" id="email" required>
+          <label for="password">Password:</label>
+          <input type="password" id="password" required>
+          <button type="submit">Login</button>
+        </form>
+        <p>New user? <a href="signup.html">Sign up here</a></p>
+        <p id="error-message"></p>
+    </div>
+
+    <!-- Firebase setup -->
+    <script type="module">
+      import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js';
+      import { getAuth, signInWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/9.17.1/firebase-auth.js';
+      
+      // Your web app's Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyD87ILk0ly2B01ftNdZaZoCz7-xCec42K4",
+        authDomain: "dashboard-venusnjupiter.firebaseapp.com",
+        projectId: "dashboard-venusnjupiter",
+        storageBucket: "dashboard-venusnjupiter.appspot.com",
+        messagingSenderId: "414894897906",
+        appId: "1:414894897906:web:a1fe03d2ba8b2f8df5ee6b",
+        measurementId: "G-37NSX3K89F"
+      };
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth(app);
+
+      document.getElementById('loginForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        signInWithEmailAndPassword(auth, email, password)
+          .then(() => {
+            window.location.href = '/public/devices.html';
+          })
+          .catch((error) => {
+            document.getElementById('error-message').innerText = error.message;
+          });
+        });
+    </script> 
+</body>
+</html>
