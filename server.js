@@ -11,7 +11,7 @@ const parser = new XMLParser();
 const app = express();
 app.use(cors());
 
-const port = 5500;
+const port = 1000;
 
 //Endpoint to fetch status.xml
 app.get('/fetch-status', async (req, res) => {
