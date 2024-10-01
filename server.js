@@ -12,7 +12,7 @@ const parser = new XMLParser();
 const app = express();
 app.use(cors());
 
-const port = 10000;
+const port = 5500;
 
 // Serve static files from the 'public' directory
 app.use(express.static('public'));
