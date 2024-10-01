@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import { XMLParser } from 'fast-xml-parser';
 import cors from 'cors';
 import https from 'https';
+import path from 'path';
 
 dotenv.config();
 
@@ -12,6 +13,14 @@ const app = express();
 app.use(cors());
 
 const port = 10000;
+
+// Serve static files from the 'public' directory
+app.use(express.static('public'));
+
+// Route to serve signup.html on root access
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'signup.html'));
+});
 
 //Endpoint to fetch status.xml
 app.get('/fetch-status', async (req, res) => {
@@ -147,8 +156,6 @@ app.get('/fetch-status', async (req, res) => {
     res.status(500).send('Error fetching status.xml');
   }
 });
-
-app.use(express.static('public'));
 
 app.listen(port, () => {
   console.log(`Server running now at ${port}`);
