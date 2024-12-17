@@ -22,8 +22,7 @@
 
     <!-- Firebase setup -->
     <script type="module">
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
-      //import { getAnalytics } from "/firebase/analytics";
+      import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js';
       import { getAuth, signInWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/9.17.1/firebase-auth.js';
       
       // Your web app's Firebase configuration
@@ -52,16 +51,18 @@
 
         signInWithEmailAndPassword(auth, email, password)
           .then((userCredential) => {
+            
             // After successful login, we will get the user object
             const user = userCredential.user;
-            
+
             if (!user.emailVerified) 
             {
               throw new Error('Email not verified. Please verify your email before logging in.');
             }
+
             
             // Check the email and redirect accordingly
-            if (email === 'sabid.c@velocis.in' || email === 'muhammed.anees@velocis.in' || email === 'sougato.roy@velocis.co.in') {
+            if (email === 'sabid.c@velocis.in' || email === 'muhammed.anees@velocis.in' || email === 'sougatoroy007@gmail.com') {
               console.log('Login Successful:', userCredential.user);
               window.location.href = 'devicesADMIN.html';  // Redirect to Admin page
             } 
@@ -88,7 +89,7 @@
                 alert(`Login failed. Please try again.${errorMessage}`);
                 break;
             }
-            document.getElementById(`${errorMessage}`).innerText = errorCode;
+            document.getElementById('error-message').innerText = errorCode;
           });
         });
     </script> 
