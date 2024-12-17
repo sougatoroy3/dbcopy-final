@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Velocis Collab Team Project Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Main Heading -->
+    <header>
+      <h1>Collab Team Project ➡️ Dashboard</h1>
+      <p class="description">
+        A comprehensive dashboard project designed to enhance the management and utilization of Cisco Video Conferencing (VC) devices through an user-friendly interface built with JavaScript and Firebase.
+      </p>
+    </header>
+
+    <!-- Left and Right Boxes -->
+    <div class="info-boxes">
+      <div class="info-box left" onclick="redirectTo('https://www.velocis.in/about')">
+        <h2>Who we are?</h2>
+      </div>
+      <div class="info-box right" onclick="redirectTo('https://www.velocis.in/listing')">
+        <h2>What we do?</h2>
+      </div>
+    </div>
+
+    <!-- Admin and User Buttons -->
+    <div class="button-group">
+      <button onclick="navigateTo('login.html')">Admin</button>
+      <button onclick="navigateTo('signup.html')">User</button>
+    </div>
+
+    <!-- Footer Section -->
+    <footer>
+      <div class="contact-us">
+        <h3>Contact Us</h3>
+        <ul>
+          <li>Anees - Practice Lead, South</li>
+          <li>Sabid - Team Lead, South</li>
+          <li>Roy - Associate</li>
+        </ul>
+      </div>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -22,18 +22,20 @@
 
     <!-- Firebase setup -->
     <script type="module">
-      import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js';
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
+      //import { getAnalytics } from "/firebase/analytics";
       import { getAuth, signInWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/9.17.1/firebase-auth.js';
       
       // Your web app's Firebase configuration
       const firebaseConfig = {
-        apiKey: "AIzaSyD87ILk0ly2B01ftNdZaZoCz7-xCec42K4",
-        authDomain: "dashboard-venusnjupiter.firebaseapp.com",
-        projectId: "dashboard-venusnjupiter",
-        storageBucket: "dashboard-venusnjupiter.appspot.com",
-        messagingSenderId: "414894897906",
-        appId: "1:414894897906:web:a1fe03d2ba8b2f8df5ee6b",
-        measurementId: "G-37NSX3K89F"
+        apiKey: "AIzaSyDVU2o_B4YcvTGO1ujZDLg1UFIElCEhaGo",
+        authDomain: "cisco-devices-dashboard.firebaseapp.com",
+        databaseURL: "https://cisco-devices-dashboard-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "cisco-devices-dashboard",
+        storageBucket: "cisco-devices-dashboard.firebasestorage.app",
+        messagingSenderId: "507256484820",
+        appId: "1:507256484820:web:ce22e248db92f564629c41",
+        measurementId: "G-5ZRX3ET070"
       };
 
       // Initialize Firebase
@@ -45,12 +47,48 @@
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
 
+        console.log('Email:', email);
+        console.log('Password:', password);
+
         signInWithEmailAndPassword(auth, email, password)
-          .then(() => {
-            window.location.href = '/public/devices.html';
+          .then((userCredential) => {
+            // After successful login, we will get the user object
+            const user = userCredential.user;
+            
+            if (!user.emailVerified) 
+            {
+              throw new Error('Email not verified. Please verify your email before logging in.');
+            }
+            
+            // Check the email and redirect accordingly
+            if (email === 'sabid.c@velocis.in' || email === 'muhammed.anees@velocis.in' || email === 'sougato.roy@velocis.co.in') {
+              console.log('Login Successful:', userCredential.user);
+              window.location.href = 'devicesADMIN.html';  // Redirect to Admin page
+            } 
+            else {
+              console.log('Login Successful:', userCredential.user);
+              window.location.href = 'devicesUSER.html';  // Redirect to User page
+            }
           })
           .catch((error) => {
-            document.getElementById('error-message').innerText = error.message;
+            const errorCode = error.code;
+            const errorMessage = error.message;
+
+            switch (errorCode) {
+              case 'auth/user-not-found':
+                alert('No user found with this email.');
+                break;
+              case 'auth/wrong-password':
+                alert('Incorrect password.');
+                break;
+              case 'auth/email-not-verified':
+                alert('Email not verified. Please check your inbox.');
+                break;
+              default:
+                alert(`Login failed. Please try again.${errorMessage}`);
+                break;
+            }
+            document.getElementById(`${errorMessage}`).innerText = errorCode;
           });
         });
     </script> 

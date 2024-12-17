@@ -6,6 +6,13 @@ import cors from 'cors';
 import https from 'https';
 import path from 'path';
 
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+// Get the current directory
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
 dotenv.config();
 
 const parser = new XMLParser();
@@ -19,17 +26,45 @@ app.use(express.static('public'));
 
 // Route to serve signup.html on root access
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'signup.html'));
+  res.sendFile(path.join(__dirname, 'public', 'homepage.html'));
 });
 
 //Endpoint to fetch status.xml
 app.get('/fetch-status', async (req, res) => {
   try {
     console.log('Received request for /fetch-status'); // Log for debugging
-    // For Room Kit Mini
-    const response = await fetch('https://192.168.10.167/status.xml', {
+    
+    //Determine the requested device from the query parameter
+    const device = req.query.device;
+    console.log(`Device selected: ${device}`);
+
+    let url = '';
+    let credentials = '';
+    
+    // Configure based on the device
+    if (device === 'VENUS') {
+      url = 'https://192.168.10.167/status.xml';
+      credentials = 'Test123:admin@123';
+    } 
+    else if (device === 'JUPITER') 
+    {
+      url = 'https://192.168.10.95/status.xml';
+      credentials = 'Test2:Vspl@1234';
+    } 
+    else if (device === 'DC Cabin') 
+    {
+      console.log('Redirecting to dcVP.html');
+      return res.json({ redirect: 'dcVP.html' });
+    }
+    else
+    {
+      return res.status(400).send('Invalid device selected');
+    }
+
+    // Fetch the status
+    const response = await fetch(url, {
       headers: {
-        'Authorization': 'Basic ' + Buffer.from('Test123:admin@123').toString('base64'),
+        'Authorization': 'Basic ' + Buffer.from(credentials).toString('base64'),
       },
       agent: new https.Agent({
         rejectUnauthorized: false, // Disable SSL verification
@@ -52,6 +87,10 @@ app.get('/fetch-status', async (req, res) => {
     const noiseRemoval = jsonObj?.Status?.Audio?.Microphones?.NoiseRemoval;
     const voiceActivityDetector = jsonObj?.Status?.Audio?.Microphones?.VoiceActivityDetector?.Activity;
 
+    //Bookings Report
+    const availabilityStatus = jsonObj?.Status?.Bookings?.Availability?.Status;
+    const availabilityTimeStamp = jsonObj?.Status?.Bookings?.Availability?.TimeStamp || 'N/A';
+
     // Cameras Report
     const cameraReport = jsonObj?.Status?.Cameras;
     const cameraConnectionStatus = cameraReport?.Camera?.Connected;
@@ -60,10 +99,26 @@ app.get('/fetch-status', async (req, res) => {
     const speakerTracking = cameraReport?.SpeakerTrack?.Availability;
     const speakerTrackingStatus = cameraReport?.SpeakerTrack?.Status;
 
-    // Peripherals Report
-    const peripheralsReport = jsonObj?.Status?.Peripherals?.ConnectedDevice;
-    const deviceName = peripheralsReport.Name;
-    const deviceStatus = peripheralsReport.Status;
+    // Debug: Log the Peripherals section for troubleshooting
+    console.log('Peripherals Section:', JSON.stringify(jsonObj?.Status?.Peripherals, null, 2));
+
+    // Safely extract Peripherals Report
+    let deviceName='Unknown';
+    let deviceStatus='Unknown';
+    let pinPairing='Unknown';
+    const peripherals = jsonObj?.Status?.Peripherals;
+    if (peripherals?.ConnectedDevice) {
+      deviceName = peripherals?.ConnectedDevice?.Name || 'Unknown';
+      deviceStatus = peripherals?.ConnectedDevice?.Status || 'Unknown';
+      console.log(`Device Name: ${deviceName}, Status: ${deviceStatus}`);
+    } 
+    else if(peripherals?.PinPairing){
+      pinPairing = peripherals?.PinPairing || 'N/A';
+    }
+    else{
+      console.log('No ConnectedDevice found in Peripherals');
+    }
+    
     //const deviceType = jsonObj?.Status?.Peripherals?.ConnectedDevice?.Type;
 
     // Proximity Report
@@ -101,6 +156,8 @@ app.get('/fetch-status', async (req, res) => {
     const webcamMode = videoReportOutput.Webcam.Mode;
     const webcamStatus = videoReportOutput.Webcam.Status;
 
+    console.log('Parsed JSON Object:', JSON.stringify(jsonObj, null, 2));
+    
     // Check Call Quality
     let callReport = ''; // Set callReport to empty by default
     let score = 10;
@@ -113,7 +170,7 @@ app.get('/fetch-status', async (req, res) => {
       callReport += 'noise removal or voice activity detector did not work';
       score -=1;
     }
-    if (cameraLightningConditions !== 'good' || cameraLightningConditions !== 'backlight') {
+    if (cameraLightningConditions !== 'good' && cameraLightningConditions !== 'backlight') {
       callReport += 'camera lighting conditions are not good';
       score -=1;
     }
@@ -150,7 +207,12 @@ app.get('/fetch-status', async (req, res) => {
     }else{ 
       finalStatus = "good ✅";
     }
-    res.json({ productId, systemUnitName, handsetUSBReport, headsetUSBReport, microphoneReport, noiseRemoval, voiceActivityDetector, cameraConnectionStatus, cameraLightningConditions, speakerTracking, speakerTrackingStatus, deviceName, deviceStatus, proximityReport, ambientNoiseLevel, soundLevel, peopleCapacity, peopleCurrent, airplayStatus, mainVideoSource, airplayStatus, miracastStatus, connectorConnectionStatus, connectorResolutionHeight, connectorResolutionWidth, connectorResolutionRefreshRate, monitorName, webcamMode, webcamStatus, finalStatus, score});
+    res.json({ availabilityStatus, availabilityTimeStamp, productId, systemUnitName, handsetUSBReport, headsetUSBReport, microphoneReport, 
+      noiseRemoval, voiceActivityDetector, cameraConnectionStatus, cameraLightningConditions, 
+      speakerTracking, speakerTrackingStatus, deviceName, deviceStatus, proximityReport, ambientNoiseLevel, 
+      soundLevel, peopleCapacity, peopleCurrent, airplayStatus, mainVideoSource, miracastStatus, connectorConnectionStatus, 
+      connectorResolutionHeight, connectorResolutionWidth, connectorResolutionRefreshRate, pinPairing, monitorName, webcamMode, webcamStatus, 
+      finalStatus, score});
   }catch (error) {
     console.error('Error fetching status.xml', error);
     res.status(500).send('Error fetching status.xml');
