@@ -19,38 +19,23 @@ The Cisco Devices Dashboard is a web application designed to provide users with 
   - Express for server-side operations (if applicable)
 
 ## File Structure
-/dbcopy-final
-│
-
-├── /public
-
-  │   ├── dcVP.html               # Profile page for Divakar Chaubey
-
-  │   ├── devicesADMIN.html       # Admin dashboard for device management
-
-  │   ├── devicesUSER.html        # User dashboard for device monitoring
-
-  │   ├── login.html              # User login page
-
-  │   ├── signup.html             # User signup page
-
-  │   ├── styleDC.css             # CSS styles for the profile page
-
-  │   └── scriptDC.js             # JavaScript for the profile page
-
-│
-
-├── /functions
-
-  │   ├── index.js                # Firebase functions for backend operations
-
-  │   └── package.json            # Dependencies for Firebase functions
-
-│
-
-├── package.json                 # Main project dependencies
-
-└── README.md                    # Project documentation
+        /dbcopy-final
+        │
+        ├── /public
+        │   ├── dcVP.html               # Profile page for Divakar Chaubey
+        │   ├── devicesADMIN.html       # Admin dashboard for device management
+        │   ├── devicesUSER.html        # User dashboard for device monitoring
+        │   ├── login.html              # User login page
+        │   ├── signup.html             # User signup page
+        │   ├── styleDC.css             # CSS styles for the profile page
+        │   └── scriptDC.js             # JavaScript for the profile page
+        │
+        ├── /functions
+        │   ├── index.js                # Firebase functions for backend operations
+        │   └── package.json            # Dependencies for Firebase functions
+        │
+        ├── package.json                 # Main project dependencies
+        └── README.md                    # Project documentation
 
 
 ## Installation
