@@ -1,3 +1,10 @@
+<p>
+    <img src="https://img.shields.io/badge/Author-sougatoroy3-ff69b4.svg" />
+    <img src="https://img.shields.io/badge/JavaScript-ff69b4.svg" />
+    <img src="https://img.shields.io/badge/Firebase-ff69b4.svg" />
+    <img src="https://img.shields.io/badge/CISCO-Webex Devices-ff69b4.svg" />
+</p>
+
 # Cisco Devices Dashboard
 
 ## Overview
