@@ -129,7 +129,7 @@
             deviceList.appendChild(div);
 
             // Fetch the status for each device
-            fetch(`http://localhost:5500/fetch-status?device=${device}`)
+            fetch(`https://dbcopy-final.onrender.com/fetch-status?device=${device}`)
               .then(response => {
                 if (!response.ok) {
                   throw new Error(`Network response was not ok. ${response.status}`);
@@ -181,7 +181,7 @@
         // Display device details (mocked data)
         function showDeviceDetails(device) 
         {
-          fetch(`http://localhost:5500/fetch-status?device=${device}`)
+          fetch(`https://dbcopy-final.onrender.com/fetch-status?device=${device}`)
             .then((response) => {
               if (!response.ok) 
               {
