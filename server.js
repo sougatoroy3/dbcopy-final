@@ -18,7 +18,7 @@ dotenv.config();
 const parser = new XMLParser();
 const app = express();
 //app.use(cors());
-app.use(cors({ origin: 'https://your-netlify-site.netlify.app' }));
+app.use(cors({ origin: 'https://dashboard-velocis.netlify.app' }));
 
 const port = 5500;
 
