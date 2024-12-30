@@ -35,6 +35,9 @@
     .details-box table {
       width: 100%;
       border-collapse: collapse;
+      display: block;
+      overflow-x: auto;
+      white-space: nowrap;
     }
 
     .details-box table, .details-box th, .details-box td {
@@ -66,7 +69,7 @@
       cursor: pointer;
     }
 
-    #detailedReportButton {
+    #detailedReportButton, #downloadPdfButton {
       margin-top: 10px;
       background-color: #28a745;
       color: white;
@@ -75,16 +78,17 @@
       border-radius: 5px;
       cursor: pointer;
     }
+
+    #downloadPdfButton {
+      margin-left: 10px;
+      background-color: #007bff;
+    }
   </style>
 </head>
 <body>
     <div class="device-container">
         <input type="text" id="searchBar" placeholder="Search for devices...">
-        <div id="deviceList" class="device-list">
-          <!-- Devices will be dynamically added here -->
-          <div class="device-icon">
-            <img src="/images/device-icon.png" alt="Device Icon">
-        </div>
+        <div id="deviceList" class="device-list"></div>
     </div>
 
     <!-- Dialog Box for Call Quality -->
@@ -93,6 +97,7 @@
       <div id="detailsSummary">
         <h4 id="callQualityStatus"> Call Quality as per current status will be:</h4>
         <button id="detailedReportButton">Show Detailed Report</button>
+        <button id="downloadPdfButton">Download PDF</button>
       </div>
       <div id="details" class="details-box"></div>
         <!-- Details will be added here -->
@@ -102,6 +107,7 @@
       </div>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <script>
         // Devices array
         const devices = ['VENUS', 'MARS', 'JUPITER', 'SKYLAB', 'PLUTO', 'DC Cabin'];
@@ -110,6 +116,7 @@
         const closeDialogButton = document.getElementById('closeDialog');
         const detailsDiv = document.getElementById('details');
         const detailedReportButton = document.getElementById('detailedReportButton');
+        const downloadPdfButton = document.getElementById('downloadPdfButton');
     
         // Render devices list
         function renderDeviceList() {
@@ -120,9 +127,42 @@
             div.innerText = device;
             div.onclick = () => showDeviceDetails(device);
             deviceList.appendChild(div);
+
+            // Fetch the status for each device
+            fetch(`http://localhost:5500/fetch-status?device=${device}`)
+              .then(response => {
+                if (!response.ok) {
+                  throw new Error(`Network response was not ok. ${response.status}`);
+                }
+                return response.json();
+              })
+              .then(data => {
+                if (data.error) {
+                  div.style.backgroundColor = '#f8d7da'; // Light red for errors
+                  div.style.color = '#721c24'; // Dark red text
+                  div.innerText += ` (Error)`;
+                } else {
+                  if (data.availabilityStatus === 'Free' || data.availabilityStatus === 'FreeUntil') {
+                    div.style.backgroundColor = '#28a745'; // Green for available
+                    div.style.color = 'white';
+                  } else {
+                    div.style.backgroundColor = '#dc3545'; // Red for unavailable
+                    div.style.color = 'white';
+                  }
+                }
+
+                // Add click event to show detailed status
+                div.onclick = () => showDeviceDetails(device, div);
+              })
+              .catch(error => {
+                console.error(`Error fetching status for device ${device}:`, error);
+                div.style.backgroundColor = '#f8d7da'; // Light red for errors
+                div.style.color = '#721c24'; // Dark red text
+                div.innerText += ` (Error fetching data)`;
+              });
           });
-        }
-    
+        }        
+        
         // Filter devices by search query
         document.getElementById('searchBar').addEventListener('input', function() {
           const query = this.value.toLowerCase();
@@ -155,6 +195,7 @@
                 dialog.style.display = 'block';
                 document.getElementById('callQualityStatus').innerText = `Error: ${data.error}`;
                 detailsDiv.innerHTML = `<h4>Invalid device selected or data not available.</h4>`;
+                return;
               }
               dialog.style.display = 'block';
               document.getElementById('callQualityStatus').innerText = `${data.productId}--${data.systemUnitName}
@@ -221,6 +262,47 @@
           detailsDiv.style.display = detailsDiv.style.display === 'none' ? 'block' : 'none';
           detailedReportButton.innerText = detailsDiv.style.display === 'none' ? 'Show Detailed Report' : 'Hide Detailed Report';
         });
+
+        downloadPdfButton.addEventListener('click', () => {
+          const { jsPDF } = window.jspdf;
+          const doc = new jsPDF();
+
+          doc.setFontSize(16);
+          doc.text('Room Report', 10, 10);
+
+          const summaryText = document.getElementById('callQualityStatus').innerText;
+          doc.setFontSize(12);
+          doc.text(summaryText, 10, 20);
+
+          // Get details table content
+          const tableRows = [];
+          const table = detailsDiv.querySelector('table');
+          const rows = table ? table.querySelectorAll('tr') : [];
+
+          rows.forEach((row, index) => {
+            const cells = row.querySelectorAll('td, th');
+            const rowData = [];
+            cells.forEach(cell => {
+              rowData.push(cell.innerText.trim());
+            });
+            tableRows.push(rowData);
+          });
+
+          // Add table content to PDF
+          let yOffset = 30;  // Start from position after summary
+          tableRows.forEach(row => {
+            const rowHeight = 10;
+            const cellWidth = 60;
+            row.forEach((cell, idx) => {
+              doc.text(cell, 10 + idx * cellWidth, yOffset);
+            });
+            yOffset += rowHeight;
+          });
+
+          // Save the PDF
+          doc.save('Room_Report.pdf');
+        });
+
 
         // Close the dialog
         closeDialogButton.addEventListener('click', () => {

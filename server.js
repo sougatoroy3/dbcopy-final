@@ -43,13 +43,13 @@ app.get('/fetch-status', async (req, res) => {
     
     // Configure based on the device
     if (device === 'VENUS') {
-      url = 'ipaddress/status.xml';
-      credentials = 'password';
+      url = 'https://192.168.10.167/status.xml';
+      credentials = 'Test123:admin@123';
     } 
     else if (device === 'JUPITER') 
     {
-      url = 'ipaddress/status.xml';
-      credentials = 'password';
+      url = 'https://192.168.10.95/status.xml';
+      credentials = 'Test2:Vspl@1234';
     } 
     else if (device === 'DC Cabin') 
     {
@@ -72,6 +72,7 @@ app.get('/fetch-status', async (req, res) => {
     });
 
     if (!response.ok) {
+      console.error(`HTTP error! Status: ${response.status}`);
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
 
@@ -80,6 +81,7 @@ app.get('/fetch-status', async (req, res) => {
 
     console.log('Parsed XML:', jsonObj);
     
+
     //Audio Devices Report
     const handsetUSBReport = jsonObj?.Status?.Audio?.Devices?.HandsetUSB?.ConnectionStatus;
     const headsetUSBReport = jsonObj?.Status?.Audio?.Devices?.HeadsetUSB?.ConnectionStatus;
