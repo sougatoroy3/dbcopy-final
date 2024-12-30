@@ -17,7 +17,8 @@ dotenv.config();
 
 const parser = new XMLParser();
 const app = express();
-app.use(cors());
+//app.use(cors());
+app.use(cors({ origin: 'https://your-netlify-site.netlify.app' }));
 
 const port = 5500;
 
