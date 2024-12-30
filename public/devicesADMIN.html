@@ -83,12 +83,36 @@
       margin-left: 10px;
       background-color: #007bff;
     }
+
+    #logoutContainer {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+    }
+
+    #logoutButton {
+      padding: 10px 20px;
+      background-color: #f30c0c;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    #logoutButton:hover {
+      background-color: #d40909;
+    }
   </style>
 </head>
 <body>
     <div class="device-container">
         <input type="text" id="searchBar" placeholder="Search for devices...">
         <div id="deviceList" class="device-list"></div>
+    </div>
+    <!--Logout Button-->
+    <div id="logoutContainer">
+      <button id="logoutButton">Logout</button>
     </div>
 
     <!-- Dialog Box for Call Quality -->
@@ -117,7 +141,14 @@
         const detailsDiv = document.getElementById('details');
         const detailedReportButton = document.getElementById('detailedReportButton');
         const downloadPdfButton = document.getElementById('downloadPdfButton');
-    
+
+        const logoutButton = document.getElementById('logoutButton');
+
+        logoutButton.addEventListener('click', () => {
+          // Perform any cleanup or logout operations here if necessary
+          window.location.href = 'index.html'; // Redirect to index.html
+        });
+        
         // Render devices list
         function renderDeviceList() {
           deviceList.innerHTML = '';
