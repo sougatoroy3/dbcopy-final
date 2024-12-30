@@ -36,9 +36,18 @@
       border-color: black;
     }
 
+    .content-section {
+      display: none; /* Hide all sections by default */
+      margin-left: 260px; /* Adjust margin to account for sidebar */
+      padding: 20px;
+      transition: opacity 0.3s ease-in-out;
+    }
+
     .device-container {
       margin: 20px;
       padding: 20px;
+      position: relative;
+      right: 10%;
     }
 
     .device {
@@ -208,6 +217,9 @@
       display: flex;
       gap: 20px;
       margin: 20px 0;
+      position: absolute;
+      top: 20%; 
+      right: 15px;
     }
 
     .analytics-box {
@@ -251,6 +263,9 @@
       border-radius: 10px;
       border: 5px solid #0ddc09;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      position: absolute;
+      top: 50%; 
+      right: 15px;
     }
 
     .log-container h3 {
@@ -290,6 +305,17 @@
       padding: 5px 10px;
       font-size: 12px;
     }
+
+    .close-btn-devices{
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background-color: transparent;
+      border: none;
+      font-size: 20px;
+      color: #fff;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
@@ -302,10 +328,6 @@
       <p>You are logged in as <strong>Admin</strong></p>
     </div>
 
-    <div class="device-container">
-        <input type="text" id="searchBar" placeholder="Search for devices...">
-        <div id="deviceList" class="device-list"></div>
-    </div>
     <!--Logout Button-->
     <div id="logoutContainer">
       <button id="logoutButton">Logout</button>
@@ -316,13 +338,24 @@
     <div id="sidebar" class="sidebar">
       <button class="close-btn" onclick="closeSidebar()">✖</button>
       <h2>Admin Panel</h2>
-      <a href="/public/index.html" onclick="toggleContent('home')">HOME</a>
-      <a href="#">Devices</a>
+      <a href="#" onclick="toggleContent('home')">HOME</a>
+      <a href="#" onclick="toggleContent('devices')">Devices</a>
       <a href="#">User Management</a>
       <a href="#">About</a>
       <a href="#">Services</a>
       <a href="#">Contact</a>
       <a href="#">Settings</a>
+    </div>
+
+    <div id="homeContent" class="content-section">
+      <h3>Welcome to the Admin Portal</h3>
+      <!-- Add home-related content here -->
+    </div>
+
+    <div id="devicesContent" class="content-section device-container" style="display: none;">
+      <button id="closeDevicesContent" class="close-btn-devices">✖️</button>
+      <input type="text" id="searchBar" placeholder="Search for devices...">
+      <div id="deviceList" class="device-list"></div>
     </div>
 
     <div class="analytics-container">
@@ -428,6 +461,10 @@
           });
         }        
         
+        document.getElementById('closeDevicesContent').addEventListener('click', () => {
+          document.getElementById('devicesContent').style.display = 'none';
+        });
+
         // Filter devices by search query
         document.getElementById('searchBar').addEventListener('input', function() {
           const query = this.value.toLowerCase();
@@ -587,7 +624,22 @@
             const sidebar = document.getElementById('sidebar');
             sidebar.style.left = '-250px'; // Close the sidebar
         }
-    
+        
+
+        function toggleContent(sectionId) {
+          // Hide all content sections
+          const contentSections = document.querySelectorAll('.content-section');
+          contentSections.forEach(section => {
+            section.style.display = 'none';
+          });
+
+          // Show the selected section
+          const selectedSection = document.getElementById(sectionId + 'Content');
+          if (selectedSection) {
+            selectedSection.style.display = 'block';
+          }
+        }
+
         // Initially render the devices
         renderDeviceList();
     </script>
