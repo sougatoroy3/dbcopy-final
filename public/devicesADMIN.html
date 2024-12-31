@@ -48,6 +48,7 @@
       padding: 20px;
       position: relative;
       right: 10%;
+      border:5px solid #ff4800;
       background-image: url('./1stFloor.png'); /* Background image */
       background-size: cover; /* Ensure the image covers the entire container */
       background-position: center; /* Center the image */
@@ -230,11 +231,11 @@
 
     .analytics-container {
       display: flex;
-      gap: 20px;
+      gap: 10px;
       margin: 20px 0;
       position: absolute;
       top: 20%; 
-      right: 15px;
+      right: 7px;
     }
 
     .analytics-box {
@@ -369,7 +370,7 @@
 
     <div id="devicesContent" class="content-section device-container" style="display: none;">
       <button id="closeDevicesContent" class="close-btn-devices">✖️</button>
-      <input type="text" id="searchBar" placeholder="Search for devices...">
+      <!--<input type="text" id="searchBar" placeholder="Search for devices..."> -->
       <div id="deviceList" class="device-list"></div>
     </div>
 
@@ -426,12 +427,12 @@
         const downloadPdfButton = document.getElementById('downloadPdfButton');
 
         const devicePositions = {
-          'VENUS': { top: '48px', left: '695px', width: '103px', height: '171px'},
-          'MARS': { top: '-48px', left: '434px', width: '132px', height: '78px' },
-          'JUPITER': { top: '-48px', left: '-20px', width: '132px', height: '78px' },
-          'SKYLAB': { top: '48px', left: '242px', width: '102px', height: '171px' },
-          'PLUTO': { top: '-48px', left: '595px', width: '74px', height: '78px'  },
-          'DC Cabin': { top: '450px', left: '-20px', width: '74px', height: '24px'  },
+          'VENUS': { top: '69px', left: '695px', width: '103px', height: '172px'},
+          'MARS': { top: '-25px', left: '434px', width: '132px', height: '78px' },
+          'JUPITER': { top: '-25px', left: '-20px', width: '132px', height: '78px' },
+          'SKYLAB': { top: '69px', left: '242px', width: '102px', height: '172px' },
+          'PLUTO': { top: '-25px', left: '595px', width: '74px', height: '78px'  },
+          'DC Cabin': { top: '475px', left: '-20px', width: '74px', height: '24px'  },
         };
 
         const logoutButton = document.getElementById('logoutButton');
@@ -500,18 +501,18 @@
         });
 
         // Filter devices by search query
-        document.getElementById('searchBar').addEventListener('input', function() {
-          const query = this.value.toLowerCase();
-          const filteredDevices = devices.filter(device => device.toLowerCase().includes(query));
-          deviceList.innerHTML = '';
-          filteredDevices.forEach(device => {
-            const div = document.createElement('div');
-            div.className = 'device';
-            div.innerText = device;
-            div.onclick = () => showDeviceDetails(device);
-            deviceList.appendChild(div);
-          });
-        });
+        //document.getElementById('searchBar').addEventListener('input', function() {
+        //  const query = this.value.toLowerCase();
+        //  const filteredDevices = devices.filter(device => device.toLowerCase().includes(query));
+        //  deviceList.innerHTML = '';
+        //  filteredDevices.forEach(device => {
+        //    const div = document.createElement('div');
+        //    div.className = 'device';
+        //    div.innerText = device;
+        //    div.onclick = () => showDeviceDetails(device);
+        //    deviceList.appendChild(div);
+        //  });
+        //});
         
         
         // Display device details (mocked data)

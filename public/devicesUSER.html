@@ -142,7 +142,7 @@
       <p>You are logged in as <strong>USER</strong></p>
     </div>
     <div class="device-container">
-        <input type="text" id="searchBar" placeholder="Search for devices...">
+        <!--<input type="text" id="searchBar" placeholder="Search for devices...">-->
         <div id="deviceList" class="device-list"></div>
         </div>
     </div>
@@ -176,12 +176,12 @@
         const detailsDiv = document.getElementById('details');
         const detailedReportButton = document.getElementById('detailedReportButton');
         const devicePositions = {
-          'VENUS': { top: '55px', left: '681px', width: '97px', height: '163px'},
-          'MARS': { top: '-28px', left: '432px', width: '125px', height: '67px' },
-          'JUPITER': { top: '-28px', left: '0px', width: '125px', height: '67px' },
-          'SKYLAB': { top: '55px', left: '250px', width: '97px', height: '163px' },
-          'PLUTO': { top: '-29px', left: '585px', width: '72px', height: '68px'  },
-          'DC Cabin': { top: '435px', left: '0px', width: '80px', height: '25px'  },
+          'VENUS': { top: '77px', left: '681px', width: '97px', height: '163px'},
+          'MARS': { top: '-5px', left: '432px', width: '125px', height: '67px' },
+          'JUPITER': { top: '-5px', left: '0px', width: '125px', height: '67px' },
+          'SKYLAB': { top: '77px', left: '250px', width: '97px', height: '163px' },
+          'PLUTO': { top: '-5px', left: '585px', width: '72px', height: '68px'  },
+          'DC Cabin': { top: '460px', left: '0px', width: '80px', height: '25px'  },
         };
 
         const logoutButton = document.getElementById('logoutButton');
@@ -246,18 +246,18 @@
         }
     
         // Filter devices by search query
-        document.getElementById('searchBar').addEventListener('input', function() {
-          const query = this.value.toLowerCase();
-          const filteredDevices = devices.filter(device => device.toLowerCase().includes(query));
-          deviceList.innerHTML = '';
-          filteredDevices.forEach(device => {
-            const div = document.createElement('div');
-            div.className = 'device';
-            div.innerText = device;
-            div.onclick = () => showDeviceDetails(device);
-            deviceList.appendChild(div);
-          });
-        });
+        //document.getElementById('searchBar').addEventListener('input', function() {
+        //  const query = this.value.toLowerCase();
+        //  const filteredDevices = devices.filter(device => device.toLowerCase().includes(query));
+        //  deviceList.innerHTML = '';
+        //  filteredDevices.forEach(device => {
+        //    const div = document.createElement('div');
+        //    div.className = 'device';
+        //    div.innerText = device;
+        //    div.onclick = () => showDeviceDetails(device);
+        //    deviceList.appendChild(div);
+        //  });
+        //});
         
         
         // Display device details (mocked data)
