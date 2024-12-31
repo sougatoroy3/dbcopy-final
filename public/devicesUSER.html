@@ -138,6 +138,55 @@
       font-size: 18px;
       color: #0c5460;
     }
+
+    /* Legend Box Styles */
+    .legend-box {
+      position: absolute;
+      top: 10%;
+      right: 10px;
+      background-color: white;
+      border: 2px solid #ccc;
+      border-radius: 10px;
+      padding: 10px;
+      width: 150px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .legend-title {
+      font-size: 16px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 5px;
+    }
+
+    .legend-color {
+      width: 20px;
+      height: 20px;
+      border-radius: 5px;
+      margin-right: 10px;
+    }
+
+    .legend-occupied {
+      background-color: #dc3545; /* Red for occupied */
+    }
+
+    .legend-available {
+      background-color: #28a745; /* Green for available */
+    }
+
+    .legend-booked-empty {
+      background-color: orange; /* Orange for booked but empty */
+    }
+
+    .legend-error {
+      background-color: #f8d7da; /* Light red for unable to fetch */
+    }
   </style>
 </head>
 <body>
@@ -171,9 +220,30 @@
       </div>
     </div>
 
+    <!-- Legend Box -->
+    <div class="legend-box">
+      <div class="legend-title">Legend</div>
+      <div class="legend-item">
+        <div class="legend-color legend-occupied"></div>
+        <span>Occupied</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color legend-available"></div>
+        <span>Available</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color legend-booked-empty"></div>
+        <span>Booked but empty</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color legend-error"></div>
+        <span>Error</span>
+      </div>
+    </div>
+    
     <script>
         // Devices array
-        const devices = ['VENUS', 'MARS', 'JUPITER', 'SKYLAB', 'PLUTO', 'DC Cabin'];
+        const devices = ['VENUS', 'MOON', 'JUPITER', 'SKYLAB', 'PLUTO', 'DC Cabin'];
         const deviceList = document.getElementById('deviceList');
         const dialog = document.getElementById('dialog');
         const closeDialogButton = document.getElementById('closeDialog');
@@ -181,8 +251,8 @@
         const detailedReportButton = document.getElementById('detailedReportButton');
         const devicePositions = {
           'VENUS': { top: '77px', left: '681px', width: '97px', height: '163px'},
-          'MARS': { top: '-5px', left: '432px', width: '125px', height: '67px' },
-          'JUPITER': { top: '-5px', left: '0px', width: '125px', height: '67px' },
+          'MOON': { top: '-5px', left: '432px', width: '125px', height: '67px' },
+          'JUPITER': { top: '-5px', left: '0px', width: '225px', height: '67px' },
           'SKYLAB': { top: '77px', left: '250px', width: '97px', height: '163px' },
           'PLUTO': { top: '-5px', left: '585px', width: '72px', height: '67.5px'  },
           'DC Cabin': { top: '460px', left: '0px', width: '80px', height: '25px'  },

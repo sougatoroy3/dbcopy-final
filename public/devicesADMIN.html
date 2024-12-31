@@ -46,7 +46,8 @@
     .device-container {
       margin: 20px;
       padding: 20px;
-      position: relative;
+      position: absolute; /* Allow the container to be moved */
+      cursor: grab; /* Change cursor to indicate draggable */
       right: 10%;
       border:5px solid #ff4800;
       background-image: url('./1stFloor.png'); /* Background image */
@@ -332,6 +333,58 @@
       color: #fff;
       cursor: pointer;
     }
+
+    /* Legend Box Styles */
+    .legend-box {
+      position: absolute;
+      top: 15.5%;
+      right: 10px;
+      background-color: white;
+      border: 2px solid #ccc;
+      border-radius: 10px;
+      padding: 10px;
+      width: auto; /* Adjust width to fit the items */
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      display: flex; /* Arrange items in a row */
+      flex-wrap: wrap; /* Wrap items to a new row if they overflow */
+      gap: 10px; /* Add spacing between items */
+    }
+
+    .legend-title {
+      font-size: 16px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 0;
+    }
+
+    .legend-color {
+      width: 20px;
+      height: 20px;
+      border-radius: 5px;
+      margin-right: 10px;
+    }
+
+    .legend-occupied {
+      background-color: #dc3545; /* Red for occupied */
+    }
+
+    .legend-available {
+      background-color: #28a745; /* Green for available */
+    }
+
+    .legend-booked-empty {
+      background-color: orange; /* Orange for booked but empty */
+    }
+
+    .legend-error {
+      background-color: #f8d7da; /* Light red for unable to fetch */
+    }
   </style>
 </head>
 <body>
@@ -393,7 +446,7 @@
       <ul id="activityLog">
         <li>Device JUPITER: Error detected at 05:37PM on 30-12-2024 </li>
         <li>Device VENUS: Updated status now</li>
-        <li>Device MARS:  Cannot connect to device</li>
+        <li>Device MOON:  Cannot connect to device</li>
         <li>Device PLUTO: Cannot connect to device</li>
         <li>Device SKYLAB: Cannot connect to device</li>
       </ul>
@@ -417,10 +470,31 @@
       </div>
     </div>
 
+    <!-- Legend Box -->
+    <div class="legend-box">
+      <div class="legend-title">Legend</div>
+      <div class="legend-item">
+        <div class="legend-color legend-occupied"></div>
+        <span>Occupied</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color legend-available"></div>
+        <span>Available</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color legend-booked-empty"></div>
+        <span>Booked but empty</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color legend-error"></div>
+        <span>Error</span>
+      </div>
+    </div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <script>
         // Devices array
-        const devices = ['VENUS', 'MARS', 'JUPITER', 'SKYLAB', 'PLUTO', 'DC Cabin'];
+        const devices = ['VENUS', 'MOON', 'JUPITER', 'SKYLAB', 'PLUTO', 'DC Cabin'];
         const deviceList = document.getElementById('deviceList');
         const dialog = document.getElementById('dialog');
         const closeDialogButton = document.getElementById('closeDialog');
@@ -428,13 +502,41 @@
         const detailedReportButton = document.getElementById('detailedReportButton');
         const downloadPdfButton = document.getElementById('downloadPdfButton');
 
+        // Get the device container
+        const deviceContainer = document.querySelector('.device-container');
+
+        // Variables to track dragging state
+        let isDragging = false;
+        let offsetX, offsetY;
+
+        // Event listener for mouse down (start dragging)
+        deviceContainer.addEventListener('mousedown', (e) => {
+          isDragging = true;
+          offsetX = e.clientX - deviceContainer.offsetLeft;
+          offsetY = e.clientY - deviceContainer.offsetTop;
+          deviceContainer.style.cursor = 'grabbing'; // Change cursor while dragging
+        });
+
+        // Event listener for mouse move (while dragging)
+        document.addEventListener('mousemove', (e) => {
+          if (isDragging) {
+            deviceContainer.style.left = `${e.clientX - offsetX}px`;
+            deviceContainer.style.top = `${e.clientY - offsetY}px`;
+          }
+        });
+
+        // Event listener for mouse up (stop dragging)
+        document.addEventListener('mouseup', () => {
+          isDragging = false;
+          deviceContainer.style.cursor = 'grab'; // Reset cursor
+        });
         const devicePositions = {
           'VENUS': { top: '69px', left: '695px', width: '103px', height: '172px'},
-          'MARS': { top: '-25px', left: '434px', width: '132px', height: '78px' },
-          'JUPITER': { top: '-25px', left: '-20px', width: '132px', height: '78px' },
+          'MOON': { top: '-25px', left: '434px', width: '132px', height: '78px' },
+          'JUPITER': { top: '-25px', left: '-20px', width: '241px', height: '78px' },
           'SKYLAB': { top: '69px', left: '242px', width: '102px', height: '172px' },
           'PLUTO': { top: '-25px', left: '595px', width: '74px', height: '77.5px'  },
-          'DC Cabin': { top: '475px', left: '-20px', width: '74px', height: '24px'  },
+          'DC Cabin': { top: '472px', left: '-15px', width: '78px', height: '27px'  },
         };
 
         const logoutButton = document.getElementById('logoutButton');
@@ -676,6 +778,30 @@
             selectedSection.style.display = 'block';
           }
         }
+
+        function toggleDeviceContainer() {
+          const deviceContainer = document.querySelector('.device-container');
+          const legendBox = document.querySelector('.legend-box');
+          const logContainer = document.querySelector('.log-container');
+
+          // Check if device-container is currently displayed
+          if (deviceContainer.style.display === 'none' || !deviceContainer.style.display) {
+            deviceContainer.style.display = 'block'; // Show device-container
+            legendBox.style.display = 'block'; // Show legend-box
+            logContainer.style.display = 'none'; // Hide log-container
+          } else {
+            deviceContainer.style.display = 'none'; // Hide device-container
+            legendBox.style.display = 'none'; // Hide legend-box
+            logContainer.style.display = 'block'; // Show log-container
+          }
+        }
+
+        // Close device-container function
+        document.getElementById('closeDevicesContent').addEventListener('click', () => {
+          document.querySelector('.device-container').style.display = 'none'; // Hide device-container
+          document.querySelector('.legend-box').style.display = 'none'; // Hide legend-box
+          document.querySelector('.log-container').style.display = 'block'; // Show log-container
+        });
 
         // Initially render the devices
         renderDeviceList();
