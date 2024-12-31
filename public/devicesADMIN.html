@@ -326,7 +326,7 @@
       position: absolute;
       top: 10px;
       right: 10px;
-      background-color: transparent;
+      background-color: red;
       border: none;
       font-size: 20px;
       color: #fff;
@@ -356,7 +356,7 @@
       <h2>Admin Panel</h2>
       <a href="#" onclick="toggleContent('home')">HOME</a>
       <a href="#" onclick="toggleContent('devices')">Devices</a>
-      <a href="#">User Management</a>
+      <a href="#" onclick="toggleContent('users')">User Management</a>
       <a href="#">About</a>
       <a href="#">Services</a>
       <a href="#">Contact</a>
@@ -369,14 +369,13 @@
     </div>
 
     <div id="devicesContent" class="content-section device-container" style="display: none;">
-      <button id="closeDevicesContent" class="close-btn-devices">✖️</button>
+      <button id="closeDevicesContent" class="close-btn-devices">✖</button>
       <!--<input type="text" id="searchBar" placeholder="Search for devices..."> -->
       <div id="deviceList" class="device-list"></div>
     </div>
-
     <div class="analytics-container">
       <div class="analytics-box">
-        <h3>Total Devices</h3>
+        <h3>Total Rooms</h3>
         <p>6</p>
       </div>
       <div class="analytics-box">
@@ -394,6 +393,9 @@
       <ul id="activityLog">
         <li>Device JUPITER: Error detected at 05:37PM on 30-12-2024 </li>
         <li>Device VENUS: Updated status now</li>
+        <li>Device MARS:  Cannot connect to device</li>
+        <li>Device PLUTO: Cannot connect to device</li>
+        <li>Device SKYLAB: Cannot connect to device</li>
       </ul>
 
     </div>
