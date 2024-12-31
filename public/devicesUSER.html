@@ -6,16 +6,37 @@
   <title>Devices Dashboard</title>
   <link rel="stylesheet" href="style.css">
   <style>
+  
     .device-container {
       margin: 20px;
+      position: relative;
+      background-image: url('./1stFloor.png'); /* Background image */
+      background-size: cover; /* Ensure the image covers the entire container */
+      background-position: center; /* Center the image */
+      width: 800px;
+      height: 500px; /* Adjust height to fit the image dimensions */
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .device-list {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background-color: transparent;
     }
 
     .device {
-      margin: 5px 0;
-      padding: 10px;
-      border: 1px solid #ccc;
+      position: absolute; /* Allow precise positioning */
+      color: white; /* Make text white for visibility */
+      font-size: 17px;
+      font-weight: bold;
+      background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent black background for better readability */
+      padding: 5px 10px;
       border-radius: 5px;
       cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
     }
 
     .device:hover {
@@ -100,9 +121,26 @@
     #logoutButton:hover {
       background-color: #d40909;
     }
+
+    .user-banner {
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      margin: 20px;
+      padding: 10px;
+      background-color: #d1ecf1;
+      border: 5px solid #0ddc09;
+      transform: translateX(-50%);
+      font-size: 18px;
+      color: #0c5460;
+    }
   </style>
 </head>
 <body>
+
+    <div class="user-banner">
+      <p>You are logged in as <strong>USER</strong></p>
+    </div>
     <div class="device-container">
         <input type="text" id="searchBar" placeholder="Search for devices...">
         <div id="deviceList" class="device-list"></div>
@@ -137,7 +175,15 @@
         const closeDialogButton = document.getElementById('closeDialog');
         const detailsDiv = document.getElementById('details');
         const detailedReportButton = document.getElementById('detailedReportButton');
-      
+        const devicePositions = {
+          'VENUS': { top: '55px', left: '681px', width: '97px', height: '163px'},
+          'MARS': { top: '-28px', left: '432px', width: '125px', height: '67px' },
+          'JUPITER': { top: '-28px', left: '0px', width: '125px', height: '67px' },
+          'SKYLAB': { top: '55px', left: '250px', width: '97px', height: '163px' },
+          'PLUTO': { top: '-29px', left: '585px', width: '72px', height: '68px'  },
+          'DC Cabin': { top: '435px', left: '0px', width: '80px', height: '25px'  },
+        };
+
         const logoutButton = document.getElementById('logoutButton');
 
         logoutButton.addEventListener('click', () => {
@@ -152,6 +198,16 @@
             const div = document.createElement('div');
             div.className = 'device';
             div.innerText = device;
+            
+            // Set the position of each device
+            if (devicePositions[device]) {
+              div.style.top = devicePositions[device].top;
+              div.style.left = devicePositions[device].left;
+              div.style.width = devicePositions[device].width; // Set custom width
+              div.style.height = devicePositions[device].height; // Set custom height
+              div.style.lineHeight = devicePositions[device].height; // Align text vertically
+            }
+
             div.onclick = () => showDeviceDetails(device, div);
             deviceList.appendChild(div);
 
@@ -185,7 +241,6 @@
                 console.error(`Error fetching status for device ${device}:`, error);
                 div.style.backgroundColor = '#f8d7da'; // Light red for errors
                 div.style.color = '#721c24'; // Dark red text
-                div.innerText += ` (Error fetching data)`;
               });
           });
         }
