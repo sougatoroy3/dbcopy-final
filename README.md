@@ -8,7 +8,7 @@
 # Cisco Devices Dashboard
 
 ### Homepage
-<img src="./Screenshots/homepage.png" alt="Homepage" width="800">
+<img src="./Screenshots/homePage.png" alt="Homepage" width="800" height="600"/>
 
 ### Signup Page
 <img src="./Screenshots/signUpPage.png" alt="Signup Page" width="800">
