@@ -8,12 +8,12 @@
 # Cisco Devices Dashboard
 
 ### Homepage
-<img src="./Screenshots/homePage.png" alt="Homepage" width="800" height="600"/>
+<img src="./Screenshots/homePage.png" alt="Homepage" width="800" height="400"/>
 
 ### Signup Page and Login Page
 <p porsition="center">
-    <img src="./Screenshots/signUpPage.png" alt="Signup Page" width="400" height="300" style="margin-right: 20px;">
-    <img src="./Screenshots/signUpPage.png" alt="Signup Page" width="400" height="300">
+    <img src="./Screenshots/signUpPage.png" alt="Signup Page" width="400" height="200" style="margin-right: 20px;">
+    <img src="./Screenshots/signUpPage.png" alt="Signup Page" width="400" height="200">
 </p>
 
 
@@ -28,24 +28,24 @@ The Cisco Devices Dashboard is a web application designed to provide users with 
 - Responsive design for optimal viewing on various devices.
 
 ### Admin Portal: Home Page
-<img src="./Screenshots/adminPortalHomePage.png" alt="Admin Portal Home Page" width="800" height="600">
+<img src="./Screenshots/adminPortalHomePage.png" alt="Admin Portal Home Page" width="800" height="400">
 
 ### Admin Portal: Menu
 <p porsition="center">
-    <img src="./Screenshots/adminPortalSideBarMenu.png" alt="Admin Portal Sidebar Menu" width="400" height="300"  style="margin-right: 20px;">
-    <img src="./Screenshots/adminPortalDevices.png" alt="Admin Portal Devices Menu" width="400" height="300">
+    <img src="./Screenshots/adminPortalSideBarMenu.png" alt="Admin Portal Sidebar Menu" width="400" height="200"  style="margin-right: 20px;">
+    <img src="./Screenshots/adminPortalDevices.png" alt="Admin Portal Devices Menu" width="400" height="200">
 </p>
 
 ### Admin Portal: Room Report (Quick View & Detailed Report)
 <p porsition="center">
-    <img src="./Screenshots/adminPortalRoomReportQuickView.png" alt="Admin Portal Room Report Quick View" width="400" height="300"  style="margin-right: 20px;">
-    <img src="./Screenshots/adminPortalRoomReportDetailed.png" alt="Admin Portal Room Report Detailed" width="400" height="300">
+    <img src="./Screenshots/adminPortalRoomReportQuickView.png" alt="Admin Portal Room Report Quick View" width="400" height="200"  style="margin-right: 20px;">
+    <img src="./Screenshots/adminPortalRoomReportDetailed.png" alt="Admin Portal Room Report Detailed" width="400" height="200">
 </p>
 
 ### User Portal: Home Page & Room Report
 <p porsition="center">
-    <img src="./Screenshots/userPage.png" alt="User Portal Home Page" width="400" height="300" style="margin-right: 20px;">
-    <img src="./Screenshots/userPageRoomReport.png" alt="User Portal Room Report" width="400" height="300">
+    <img src="./Screenshots/userPage.png" alt="User Portal Home Page" width="400" height="200" style="margin-right: 20px;">
+    <img src="./Screenshots/userPageRoomReport.png" alt="User Portal Room Report" width="400" height="200">
 </p>
 
 
