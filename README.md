@@ -8,13 +8,13 @@
 # Cisco Devices Dashboard
 
 ### Homepage
-<img src="./Screenshots/homePage.png" alt="Homepage" width="400" height="300"/>
+<img src="./Screenshots/homePage.png" alt="Homepage" width="300" height="150"/>
 
 ### Signup Page
-<img src="./Screenshots/signUpPage.png" alt="Signup Page" width="800">
+<img src="./Screenshots/signUpPage.png" alt="Signup Page" width="300" height="150">
 
 ### Login Page
-<img src="./Screenshots/loginPage.png" alt="Login Page" width="800">
+<img src="./Screenshots/loginPage.png" alt="Login Page" width="300" height="150">
 
 ## Overview
 The Cisco Devices Dashboard is a web application designed to provide users with insights into the call quality and status of various devices in a room. It allows users to sign up, log in, and view detailed reports on device performance, including audio, video, and room analytics.
@@ -27,25 +27,25 @@ The Cisco Devices Dashboard is a web application designed to provide users with 
 - Responsive design for optimal viewing on various devices.
 
 ### Admin Portal: Home Page
-<img src="./Screenshots/adminPortalHomePage.png" alt="Admin Portal Home Page" width="800">
+<img src="./Screenshots/adminPortalHomePage.png" alt="Admin Portal Home Page" width="300" height="150">
 
 ### Admin Portal: Sidebar Menu
-<img src="./Screenshots/adminPortalSideBarMenu.png" alt="Admin Portal Sidebar Menu" width="800">
+<img src="./Screenshots/adminPortalSideBarMenu.png" alt="Admin Portal Sidebar Menu" width="300" height="150">
 
 ### Admin Portal: Devices Menu
-<img src="./Screenshots/adminPortalDevices.png" alt="Admin Portal Devices Menu" width="800">
+<img src="./Screenshots/adminPortalDevices.png" alt="Admin Portal Devices Menu" width="300" height="150">
 
 ### Admin Portal: Room Report (Quick View)
-<img src="./Screenshots/adminPortalRoomReportQuickView.png" alt="Admin Portal Room Report Quick View" width="800">
+<img src="./Screenshots/adminPortalRoomReportQuickView.png" alt="Admin Portal Room Report Quick View" width="300" height="150">
 
 ### Admin Portal: Room Report (Detailed)
-<img src="./Screenshots/adminPortalRoomReportDetailed.png" alt="Admin Portal Room Report Detailed" width="800">
+<img src="./Screenshots/adminPortalRoomReportDetailed.png" alt="Admin Portal Room Report Detailed" width="300" height="150">
 
 ### User Portal: Home Page
-<img src="./Screenshots/userPage.png" alt="User Portal Home Page" width="800">
+<img src="./Screenshots/userPage.png" alt="User Portal Home Page" width="300" height="150">
 
 ### User Portal: Room Report
-<img src="./Screenshots/userPageRoomReport.png" alt="User Portal Room Report" width="800">
+<img src="./Screenshots/userPageRoomReport.png" alt="User Portal Room Report" width="300" height="150">
 
 
 ## Technologies Used
