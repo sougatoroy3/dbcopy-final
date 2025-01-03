@@ -18,14 +18,14 @@ dotenv.config();
 const parser = new XMLParser();
 const app = express();
 //app.use(cors());
-app.use(cors({ origin: 'https://dashboard-velocis.onrender.com/' }));
+app.use(cors({ origin: '*' }));
 
-const port = 5500;
+const port = process.env.PORT || 5500;
 
 // Serve static files from the 'public' directory
 app.use(express.static('public'));
 
-// Route to serve signup.html on root access
+// Route to serve homepage.html on root access
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'homepage.html'));
 });
@@ -39,8 +39,7 @@ app.get('/fetch-status', async (req, res) => {
     const device = req.query.device;
     console.log(`Device selected: ${device}`);
 
-    let url = '';
-    let credentials = '';
+    let url, credentials;
     
     // Configure based on the device
     if (device === 'VENUS') {
@@ -55,7 +54,7 @@ app.get('/fetch-status', async (req, res) => {
     else if (device === 'DC Cabin') 
     {
       console.log('Redirecting to dcVP.html');
-      return res.json({ redirect: 'dcVP.html' });
+      return res.sendFile(path.join(__dirname, 'public', 'dcVP.html'));
     }
     else
     {
