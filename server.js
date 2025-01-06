@@ -43,13 +43,13 @@ app.get('/fetch-status', async (req, res) => {
     
     // Configure based on the device
     if (device === 'VENUS') {
-      url = 'https://192.168.10.167/status.xml';
-      credentials = 'Test123:admin@123';
+      url = 'https://ipaddress/status.xml';
+      credentials = 'username:password';
     } 
     else if (device === 'JUPITER') 
     {
-      url = 'https://192.168.10.95/status.xml';
-      credentials = 'Test2:Vspl@1234';
+      url = 'https://ipaddress/status.xml';
+      credentials = 'username:password';
     } 
     else if (device === 'DC Cabin') 
     {
