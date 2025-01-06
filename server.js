@@ -54,7 +54,7 @@ app.get('/fetch-status', async (req, res) => {
     else if (device === 'DC Cabin') 
     {
       console.log('Redirecting to dcVP.html');
-      return res.sendFile(path.join(__dirname, 'public', 'dcVP.html'));
+      url = './public/dcVP.html';
     }
     else
     {
