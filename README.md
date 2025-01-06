@@ -3,6 +3,8 @@
     <img src="https://img.shields.io/badge/JavaScript-ff69b4.svg" />
     <img src="https://img.shields.io/badge/Firebase-ff69b4.svg" />
     <img src="https://img.shields.io/badge/CISCO-Webex Devices-ff69b4.svg" />
+    <img src="https://static.production.devnetcloud.com/codeexchange/assets/images/devnet-published.svg" />
+    <img src="https://static.production.devnetcloud.com/codeexchange/assets/images/devnet-runable-icon.svg" />
 </p>
 
 # Cisco Devices Dashboard
