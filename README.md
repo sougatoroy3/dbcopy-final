@@ -15,7 +15,7 @@
 ### Signup Page and Login Page
 <p porsition="center">
     <img src="./Screenshots/signUpPage.png" alt="Signup Page" width="400" height="200" style="margin-right: 20px;">
-    <img src="./Screenshots/signUpPage.png" alt="Signup Page" width="400" height="200">
+    <img src="./Screenshots/loginPage.png" alt="Login Page" width="400" height="200">
 </p>
 
 
