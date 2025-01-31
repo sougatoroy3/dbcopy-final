@@ -43,15 +43,20 @@ app.get('/fetch-status', async (req, res) => {
     
     // Configure based on the device
     if (device === 'VENUS') {
-      url = 'https://192.168.10.167/status.xml';
-      credentials = 'Test123:admin@123';
+      url = 'https://192.168.10.108/status.xml';
+      credentials = 'dashboard:dashboard#123';
     } 
     else if (device === 'JUPITER') 
     {
-      url = 'https://192.168.10.95/status.xml';
-      credentials = 'Test2:Vspl@1234';
-    } 
-    else if (device === 'DC Cabin') 
+      url = 'https://192.168.10.62/status.xml';
+      credentials = 'dashboard:dashboard#123';
+    }
+    else if(device === 'MOON') 
+    {
+      url = 'https://192.168.10.60/status.xml';
+      credentials = 'dashboard:dashboard#123';
+    }
+    else if (device === 'MERCURY') 
     {
       console.log('Redirecting to dcVP.html');
       url = './public/dcVP.html';
