@@ -3,6 +3,8 @@
     <img src="https://img.shields.io/badge/JavaScript-ff69b4.svg" />
     <img src="https://img.shields.io/badge/Firebase-ff69b4.svg" />
     <img src="https://img.shields.io/badge/CISCO-Webex Devices-ff69b4.svg" />
+    <img src="https://static.production.devnetcloud.com/codeexchange/assets/images/devnet-published.svg" />
+    <img src="https://static.production.devnetcloud.com/codeexchange/assets/images/devnet-runable-icon.svg" />
 </p>
 
 # Cisco Devices Dashboard
@@ -13,7 +15,7 @@
 ### Signup Page and Login Page
 <p porsition="center">
     <img src="./Screenshots/signUpPage.png" alt="Signup Page" width="400" height="200" style="margin-right: 20px;">
-    <img src="./Screenshots/signUpPage.png" alt="Signup Page" width="400" height="200">
+    <img src="./Screenshots/loginPage.png" alt="Login Page" width="400" height="200">
 </p>
 
 
